@@ -111,11 +111,10 @@ mod tests {
 
         let hs_current = av1.iter().collect::<HashSet<_>>();
         let hs_latest = av2.iter().collect::<HashSet<_>>();
-        //let c = uniq_a.intersection(&uniq_b).collect::<Vec<_>>();
-        let c = &hs_current
+        let hs = &hs_current
             .symmetric_difference(&hs_latest)
             .collect::<Vec<_>>();
 
-        println!("{:?}", c);
+        assert!(hs.len() == 2);
     }
 }
