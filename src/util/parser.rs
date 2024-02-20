@@ -1,4 +1,4 @@
-use chrono::{NaiveDate, NaiveDateTime, Utc};
+use chrono::{NaiveDate, NaiveDateTime, TimeZone, Utc};
 use mongodb::bson::{oid::ObjectId, DateTime};
 
 use regex::Regex;
@@ -32,7 +32,7 @@ pub async fn get_advisories_from_site_by_year(
         // Add some default time to convert it into a NaiveDateTime
         let naive_datetime: NaiveDateTime = naive_date.and_hms_opt(0, 0, 0).unwrap();
         // Add a timezone to the object to convert it into a DateTime<UTC>
-        let datetime_utc = chrono::DateTime::<Utc>::from_utc(naive_datetime, Utc);
+        let datetime_utc = TimeZone::from_utc_datetime(&Utc, &naive_datetime);
 
         advisories.push(Advisor {
             _id: Some(ObjectId::new()),
