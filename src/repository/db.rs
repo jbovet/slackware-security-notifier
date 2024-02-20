@@ -56,5 +56,4 @@ impl DB {
             .expect("failed to insert");
         Ok(result)
     }
-    
 }

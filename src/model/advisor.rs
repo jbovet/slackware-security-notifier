@@ -27,7 +27,7 @@ impl PartialEq for Advisor {
 
 #[cfg(test)]
 mod tests {
- 
+
     #[tokio::test]
     async fn test_advisor() {
         use super::*;
@@ -153,4 +153,4 @@ mod tests {
 
         assert_ne!(advisor1, advisor2);
     }
-}    
+}
