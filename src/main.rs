@@ -37,7 +37,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Getting current advisories from db");
     let current_advisory_list = db.find_by_year(year).await.unwrap();
     if latest_advisory_list.len() <= current_advisory_list.len() {
-        println!("No new advisories found");
+        info!("No new advisories found");
         exit(0);
     }
 
