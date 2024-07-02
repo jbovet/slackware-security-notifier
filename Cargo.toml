@@ -6,20 +6,18 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tokio = { version = "1.37.0", features = ["full"] }
-serde = { version = "1.0.198", features = ["derive"] }
+tokio = { version = "1.38.0", features = ["full"] }
+serde = { version = "1.0.203", features = ["derive"] }
 futures = "0.3.30"
-reqwest = {version = "0.12.3", features = ["blocking", "multipart"] }
-regex = "1.10.4"
+reqwest = { version = "0.12.5", features = ["blocking", "multipart"] }
+regex = "1.10.5"
 watcher = "0.0.1"
 chrono = { version = "0.4.38", features = ["unstable-locales"] }
 twitter-v2 = "0.1.8"
 env_logger = "0.11.3"
-log = "0.4.21"
+log = "0.4.22"
 
 
 [dependencies.mongodb]
 version = "2.8.2"
 features = ["bson-chrono-0_4"]
-
-
