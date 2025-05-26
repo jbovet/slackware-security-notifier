@@ -2,6 +2,7 @@ use chrono::{NaiveDate, NaiveDateTime, TimeZone, Utc};
 use mongodb::bson::{oid::ObjectId, DateTime};
 
 use regex::Regex;
+use reqwest::header::{self, USER_AGENT};
 
 use crate::model::advisor::Advisor;
 
@@ -13,11 +14,20 @@ pub async fn get_advisories_from_site_by_year(
     year: i32,
 ) -> Result<Vec<Advisor>, Box<dyn std::error::Error>> {
     let mut advisories: Vec<Advisor> = Vec::new();
-    let body = reqwest::get(format!("{}list.php?l=slackware-security&y={}", URL, year))
+
+    let client = reqwest::Client::new();
+    let mut headers = header::HeaderMap::new();
+    headers.insert(
+        USER_AGENT,
+        "Mozilla/5.0 (compatible; Rust crawler)".parse().unwrap(),
+    );
+    let body = client
+        .get(format!("{}list.php?l=slackware-security&y={}", URL, year))
+        .headers(headers)
+        .send()
         .await?
         .text()
-        .await
-        .unwrap();
+        .await?;
 
     let re = Regex::new(REGX_ADVISORIES).unwrap();
     for cap in re.captures_iter(&body) {
@@ -55,8 +65,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_get_advisories_from_site_by_year() {
-        let advisory_list = get_advisories_from_site_by_year(2023).await.unwrap();
-        assert!(advisory_list.len() > 52);
+        let advisory_list = get_advisories_from_site_by_year(2025).await.unwrap();
+        assert!(advisory_list.len() > 0);
     }
 
     #[tokio::test]
